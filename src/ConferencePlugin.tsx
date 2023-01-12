@@ -12,6 +12,7 @@ import { handleUnholdConferenceParticipant } from './flex-hooks/actions/UnholdPa
 import { addConferenceToCallCanvas } from './flex-hooks/components/CallCanvas';
 import { addConferenceToCallCanvasActions } from './flex-hooks/components/CallCanvasActions';
 import { addConferenceToParticipantCanvas } from './flex-hooks/components/ParticipantCanvas';
+import CustomizePasteElements from './utils/PasteThemeProvider';
 
 const PLUGIN_NAME = 'Conference';
 
@@ -31,6 +32,7 @@ export default class ConferencePlugin extends FlexPlugin {
     const initializers = [
       AddReducers,
       ConfigureFlexStrings,
+      CustomizePasteElements,
       addConferenceToCallCanvas,
       addConferenceToCallCanvasActions,
       addConferenceToParticipantCanvas,
