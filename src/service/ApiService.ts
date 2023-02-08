@@ -19,8 +19,6 @@ export default abstract class ApiService {
 
     if (process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN)
       this.serverlessDomain = process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
-
-    if (!this.serverlessDomain) console.error('serverless_functions_domain is not set in flex config or env file');
   }
 
   protected buildBody(encodedParams: EncodedParams): string {
@@ -44,13 +42,9 @@ export default abstract class ApiService {
         return response.json();
       })
       .catch(async (error) => {
-        // Try to return proper error message from both caught promises and Error objects
-        // https://gist.github.com/odewahn/5a5eeb23279eed6a80d7798fdb47fe91
         try {
-          // Generic retry when calls return a 'too many requests' response
-          // request is delayed by a random number which grows with the number of retries
-          if (error.status === 429 && attempts < 10) {
-            await delay(random(100, 750) + attempts * 100);
+          if (error.status === 429 && attempts < 3) {
+            await delay(random(10, 50) + attempts * 100);
             return await this.fetchJsonWithReject<T>(url, config, attempts + 1);
           }
           return error.json().then((response: any) => {

@@ -1,8 +1,35 @@
-module.exports = (config, { isProd, isDev, isTest }) => {
-  /**
-   * Customize the Jest by modifying the config object.
-   * Consult https://jestjs.io/docs/en/configuration for more information.
-   */
-
-  return config;
-}
+module.exports = {
+  // testEnvironment: 'node',
+  rootDir: '.',
+  //   transform: {
+  //     '^.+\\.(t|j)sx?$': 'ts-jest',
+  //   },
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  modulePathIgnorePatterns: ['<rootDir>/dist'],
+  testPathIgnorePatterns: ['<rootDir>/dist/'],
+  coverageDirectory: './coverage/',
+  collectCoverage: true,
+  collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}'],
+  coveragePathIgnorePatterns: [
+    '.*\\.d\\.ts',
+    'index\\.ts',
+    'polyfilled\\.ts',
+    'createAction.ts',
+    'jest.config.js',
+    'webpack.*\\.js',
+    './coverage',
+    './public',
+    '/test-utils',
+    '/types',
+    '/strings',
+    '/utils',
+  ],
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
+  testResultsProcessor: 'jest-junit',
+  reporters: ['default', 'jest-junit'],
+  // restoreMocks: true,
+  clearMocks: true,
+  automock: false,
+  //   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+};

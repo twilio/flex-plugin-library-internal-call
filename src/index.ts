@@ -1,5 +1,5 @@
 import * as FlexPlugin from '@twilio/flex-plugin';
 
-import ConferencePlugin from './ConferencePlugin';
+import InternalCallPlugin from './InternalCallPlugin';
 
-FlexPlugin.loadPlugin(ConferencePlugin);
+FlexPlugin.loadPlugin(InternalCallPlugin);

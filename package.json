@@ -1,9 +1,12 @@
 {
-  "name": "flex-conference-plugin",
+  "name": "flex-internal-call-plugin",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "flex-plugin pre-script-check"
+    "postinstall": "flex-plugin pre-script-check",
+    "test": "jest",
+    "build": "twilio flex:plugins:build",
+    "deploy": "twilio flex:plugins:deploy"
   },
   "dependencies": {
     "react": "17.0.2",
@@ -18,13 +21,23 @@
     "luxon": "^3.1.1",
     "react-select": "^5.5.0",
     "rrule": "^2.7.1",
+    "ts-jest": "26.5.6",
     "twilio-video": "^2.24.0",
     "tzdata": "^1.0.35"
   },
   "devDependencies": {
     "@twilio/flex-ui": "2.0.2",
     "@types/react-redux": "^7.1.1",
-    "react-test-renderer": "17.0.2",
-    "typescript": "^4"
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "12.1.5",
+    "@types/jest": "^26.0.20",
+    "@emotion/styled": "11.10.5",
+    "twilio-flex-token-validator": "^1.5.4",
+    "typescript": "^4",
+    "jest": "^26.0.20",
+    "jest-fetch-mock": "3.0.3",
+    "jest-junit": "12.0.0",
+    "twilio": "3.84.1",
+    "react-test-renderer": "17.0.2"
   }
 }
