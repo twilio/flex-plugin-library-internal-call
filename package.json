@@ -1,43 +1,37 @@
 {
-  "name": "flex-internal-call-plugin",
+  "name": "flex-plugin-library-internal-call",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "flex-plugin pre-script-check",
+    "preinstall": "cd ./ui-src && npm install",
     "test": "jest",
-    "build": "twilio flex:plugins:build",
-    "deploy": "twilio flex:plugins:deploy"
+    "build": "cd ui-src && twilio flex:plugins:build"
   },
   "dependencies": {
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "prop-types": "^15.7.2",
-    "@twilio-paste/core": "^17.2.0",
-    "@twilio-paste/icons": "^9.4.2",
-    "@twilio/flex-dev-utils": "^5.1.3",
-    "@twilio/flex-plugin-scripts": "6.0.3",
-    "@types/jest": "^26.0.20",
-    "lodash": "^4.17.20",
-    "luxon": "^3.1.1",
-    "react-select": "^5.5.0",
-    "rrule": "^2.7.1",
-    "ts-jest": "26.5.6",
-    "twilio-video": "^2.24.0",
-    "tzdata": "^1.0.35"
+    "@twilio-labs/serverless-runtime-types": "^1.1",
+    "lodash": "^4.17.21",
+    "twilio": "^4.0.0",
+    "twilio-flex-token-validator": "^1.5.4"
   },
   "devDependencies": {
-    "@twilio/flex-ui": "2.0.2",
-    "@types/react-redux": "^7.1.1",
+    "@babel/preset-env": "7.20.2",
+    "@babel/preset-react": "7.18.6",
+    "@babel/preset-typescript": "^7.12.1",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "12.1.5",
-    "@types/jest": "^26.0.20",
-    "@emotion/styled": "11.10.5",
-    "twilio-flex-token-validator": "^1.5.4",
-    "typescript": "^4",
+    "@twilio/flex-ui": "2.0.2",
+    "@types/jest": "^26.0.24",
+    "@types/lodash": "4.14.182",
+    "axios": "0.27.2",
     "jest": "^26.0.20",
     "jest-fetch-mock": "3.0.3",
     "jest-junit": "12.0.0",
-    "twilio": "3.84.1",
-    "react-test-renderer": "17.0.2"
+    "twilio-cli": "5.2.1",
+    "twilio-run": "3.4.2",
+    "react": "file:./ui-src/node_modules/react",
+    "react-dom": "file:./ui-src/node_modules/react-dom"
+  },
+  "engines": {
+    "node": "14"
   }
 }

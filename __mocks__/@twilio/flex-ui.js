@@ -10,8 +10,13 @@ class WorkerClient extends EventEmitter {
   constructor() {
     super();
     this.sid = 'mockWorkerSid';
-    this.attributes = {};
+    this.name = 'mockName';
+    this.attributes = {
+      contact_uri: 'mockContactURI',
+      full_name: 'mockFullName',
+    };
     this.reservations = new Map();
+    this.createTask = jest.fn();
   }
 }
 

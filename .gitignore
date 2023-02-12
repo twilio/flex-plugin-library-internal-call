@@ -150,3 +150,8 @@ appConfig.js
 
 package-lock.json
 
+# env files
+.env
+*.development
+*.stage
+
