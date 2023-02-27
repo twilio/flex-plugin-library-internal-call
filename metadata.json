@@ -1,0 +1,33 @@
+{
+    "name":"flex-plugin-library-internal-call",
+    "friendly_name" :"Internal Call Dialpad Addon",
+    "description":"This feature adds a new 'Call Agent' section to the outbound dialpad allowing an agent to directly call another agent",
+    "support":"abc@gmail.com",
+    "created_by":"Twilio",
+    "twilio_managed":"true",
+    "repo_url" : "https://github.com/twilio/flex-plugin-library-internal-call",
+    "version_details" : {
+      "version":"1.0.0",
+      "compatible_with":"2.0.0 - 2.0.2",
+      "released_by":"flex-runtime-team",
+      "changelog":"",
+      "prerequisite" : "Dialpad Addon should be enabled for the Flex account before this plugin. Before using this plugin you must first create a dedicated TaskRouter workflow with a filter mentioned in details or just add the filter mentioned in details to existing workflow.",
+      "attributes" : [{
+        "name": "TWILIO_FLEX_WORKSPACE_SID",
+        "friendly_name": "Flex Voice Workspace ID",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "Flex Voice Workspace SID",
+        "help_link" : ""
+      },
+      {
+        "name": "TWILIO_FLEX_INTERNAL_CALL_WORKFLOW_SID",
+        "friendly_name": "Flex Internal Calls Workflow ID",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "TaskRouter Workflow to handle internal calls",
+        "help_link" : ""
+      }
+      ]
+    }
+   }

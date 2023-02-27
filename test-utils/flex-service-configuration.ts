@@ -29,7 +29,15 @@ let mockedServiceConfiguration: Flex.ServiceConfiguration = {
   date_created: new Date().toISOString(),
   date_updated: new Date().toISOString(),
   messaging_service_instance_sid: 'mockMessagingServiceInstanceSid',
-  outbound_call_flows: {},
+  outbound_call_flows: {
+    default: {
+      workflow_sid: 'WFxxxxxx',
+      queue_sid: 'QSxxxxxx',
+      enabled: true,
+      caller_id: 'mockCallerId',
+      location: 'mockLocation',
+    },
+  },
   plugin_service_attributes: {},
   queue_stats_configuration: null,
   runtime_domain: 'mockRuntimeDomain',
