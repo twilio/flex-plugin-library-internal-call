@@ -157,3 +157,6 @@ package-lock.json
 
 # dPro License Checker
 dependencies.csv
+
+#jUnit
+junit.xml
