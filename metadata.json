@@ -11,9 +11,10 @@
       "compatible_with":"2.0.0 - 2.0.2",
       "released_by":"flex-runtime-team",
       "changelog":"",
-      "prerequisite" : "Dialpad Addon should be enabled for the Flex account before this plugin. Before using this plugin you must first create a dedicated TaskRouter workflow or just add the filter mentioned in details to existing workflow.",
+      "prerequisite" : "Dialpad Addon should be enabled for the Flex account before this plugin. Before using this plugin you must first create a dedicated TaskRouter workflow with a filter mentioned in details or just add the filter mentioned in details to existing workflow.",
       "attributes" : [{
         "name": "TWILIO_FLEX_WORKSPACE_SID",
+        "friendly_name": "Flex Voice Workspace ID",
         "data_type": "string",
         "type":"SERVERLESS",
         "description" : "Flex Voice Workspace SID",
@@ -21,6 +22,7 @@
       },
       {
         "name": "TWILIO_FLEX_INTERNAL_CALL_WORKFLOW_SID",
+        "friendly_name": "Flex Internal Calls Workflow ID",
         "data_type": "string",
         "type":"SERVERLESS",
         "description" : "TaskRouter Workflow to handle internal calls",

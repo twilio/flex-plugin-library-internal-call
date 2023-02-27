@@ -1,3 +1,7 @@
+NOTE: This repo is still a WIP (Work In Progress) and the codebase is not yet production ready.
+
+# Native Flex Dialpad Add-on for Agent to Agent (Internal) Call
+
 # Internal call
 
 This feature adds a new "Call Agent" section to the outbound dialpad allowing an agent to directly call another agent. In this section, there is an autocomplete dropdown where you can select the agent you want to call.
