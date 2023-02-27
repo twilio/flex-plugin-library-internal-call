@@ -1,7 +1,7 @@
 import * as Flex from '@twilio/flex-ui';
 import InternalCallService from '../../service/InternalCallService';
 import { isInternalCall } from '../../helpers/internalCall';
-import { ErrorManager, FlexPluginErrorType } from 'utils/ErrorManager';
+import { ErrorManager, FlexPluginErrorType } from '../../utils/ErrorManager';
 
 export function handleInternalAcceptTask(flex: typeof Flex, manager: Flex.Manager) {
   try {
