@@ -1,3 +1,7 @@
+## Details
+
+### Overview
+
 This feature adds a new "Call Agent" section to the outbound dialpad allowing an agent to directly call another agent. In this section, there is an autocomplete dropdown where you can select the agent you want to call.
 
 ## TaskRouter
@@ -10,4 +14,4 @@ Before using this plugin you must first create a dedicated TaskRouter workflow o
 
 ![Workflow filter configuration](screenshots/outbound-filter.png)
 
-In the `serverless-functions/.env` file, be sure to set `TWILIO_FLEX_INTERNAL_CALL_WORKFLOW_SID` to the SID of the workflow configured above (and set `TWILIO_FLEX_WORKSPACE_SID` if it has not been already).
+During installation, be sure to set `TWILIO_FLEX_INTERNAL_CALL_WORKFLOW_SID` to the SID of the workflow configured above (and set `TWILIO_FLEX_WORKSPACE_SID` if it has not been already).
