@@ -135,7 +135,7 @@ exports.handler = async function (context, event, callback) {
       await helpers.environment.setEnvironmentVariable(context, currentEnvironment, 'IN_PROGRESS_BUILD_SID', '');
       return callback(null, { status: 'completed', pluginURI: `${domain_name}${pluginBaseUrl}/bundle.js` });
     } else {
-      return callback(null, { status: 'bulding' });
+      return callback(null, { status: 'building' });
     }
   } catch (err) {
     if (err.name === 'AxiosError') {
