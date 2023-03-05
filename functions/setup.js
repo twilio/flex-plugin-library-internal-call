@@ -1,4 +1,3 @@
-const TokenValidator = require('twilio-flex-token-validator').functionValidator;
 const helpers = require('@twilio-labs/runtime-helpers');
 const { listEnvironments } = require('@twilio-labs/serverless-api/dist/api/environments');
 const { getOrCreateAssetResources, uploadAsset } = require('@twilio-labs/serverless-api/dist/api/assets');
@@ -56,7 +55,7 @@ async function getEnvironment(serverlessApiClient, serviceSid, pluginName) {
   }
 }
 
-exports.handler = TokenValidator(async function (context, event, callback) {
+exports.handler = async function (context, event, callback) {
   const pluginName = event.name;
   const version = event.version || '1.0.0';
   const pluginBaseUrl = getAssetBaseUrl(pluginName, version);
@@ -77,14 +76,14 @@ exports.handler = TokenValidator(async function (context, event, callback) {
         {
           access: 'protected',
           content: bundleData.content,
-          name: bundleData.filename,
+          name: bundleUri,
           path: bundleUri,
           filePath: bundleData.filename,
         },
         {
           access: 'protected',
           content: sourceMapData.content,
-          name: sourceMapData.filename,
+          name: sourceMapUri,
           path: sourceMapUri,
           filePath: sourceMapData.filename,
         },
@@ -136,7 +135,7 @@ exports.handler = TokenValidator(async function (context, event, callback) {
       await helpers.environment.setEnvironmentVariable(context, currentEnvironment, 'IN_PROGRESS_BUILD_SID', '');
       return callback(null, { status: 'completed', pluginURI: `${domain_name}${pluginBaseUrl}/bundle.js` });
     } else {
-      return callback(null, { status: 'bulding' });
+      return callback(null, { status: 'building' });
     }
   } catch (err) {
     if (err.name === 'AxiosError') {
@@ -148,4 +147,4 @@ exports.handler = TokenValidator(async function (context, event, callback) {
     }
     return callback(null, { status: 'failed' });
   }
-});
+};
