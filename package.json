@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "preinstall": "cd ./ui-src && npm install",
     "test": "jest",
     "makeassetsprivate": "cd ui-src/build && sh ../../scripts/makeAssetsPrivate.sh",
     "build": "cd ui-src && twilio flex:plugins:build && cd .. && npm run makeassetsprivate"
