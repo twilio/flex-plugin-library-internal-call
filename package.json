@@ -5,7 +5,8 @@
   "scripts": {
     "preinstall": "cd ./ui-src && npm install",
     "test": "jest",
-    "build": "cd ui-src && twilio flex:plugins:build"
+    "makeassetsprivate": "cd ui-src/build && sh ../../scripts/makeAssetsPrivate.sh",
+    "build": "cd ui-src && twilio flex:plugins:build && cd .. && npm run makeassetsprivate"
   },
   "dependencies": {
     "@twilio-labs/serverless-runtime-types": "^1.1",
