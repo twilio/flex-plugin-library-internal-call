@@ -21,7 +21,7 @@ export function handleInternalHoldCall(flex: typeof Flex, manager: Flex.Manager)
       abortFunction();
     });
   } catch (e) {
-    throw ErrorManager.createAndProcessError("Could not add 'beforeHoldCall' listener", {
+    throw ErrorManager.createAndProcessError("Could not add 'beforeHoldCall' listener ", {
       type: FlexPluginErrorType.action,
       description: e instanceof Error ? `${e.message}` : "Could not add 'beforeHoldCall' listener",
       context: 'Plugin.Action.beforeHoldCall',
