@@ -2,6 +2,7 @@ import { ITask } from '@twilio/flex-ui';
 import Reservation from 'types/Reservation';
 import { EncodedParams } from 'types/Params';
 import ApiService from './ApiService';
+import { ErrorManager, FlexPluginErrorType } from '../utils/ErrorManager';
 
 export interface ParticipantResponse {
   success: boolean;
@@ -33,6 +34,18 @@ class InternalCallService extends ApiService {
         })
         .catch((error) => {
           console.error(`Error ${hold ? 'holding' : 'unholding'} participant ${participantSid}\r\n`, error);
+          ErrorManager.createAndProcessError(
+            `Error ${hold ? 'holding' : 'unholding'} participant ${participantSid}\r\n`,
+            {
+              type: FlexPluginErrorType.serverless,
+              description:
+                error instanceof Error
+                  ? `${error.message}`
+                  : `Error ${hold ? 'holding' : 'unholding'} participant ${participantSid}\r\n`,
+              context: 'Plugin.InternalCallService',
+              wrappedError: error,
+            },
+          );
           reject(error);
         });
     });
@@ -90,6 +103,12 @@ class InternalCallService extends ApiService {
         })
         .catch((error) => {
           console.log(error);
+          ErrorManager.createAndProcessError(`Error wrapping task with sid ${taskSid}\r\n`, {
+            type: FlexPluginErrorType.serverless,
+            description: error instanceof Error ? `${error.message}` : `Error wrapping task with sid ${taskSid}\r\n`,
+            context: 'Plugin.InternalCallService',
+            wrappedError: error,
+          });
           reject(error);
         });
     });
