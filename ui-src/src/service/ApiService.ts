@@ -6,6 +6,8 @@ function delay<T>(ms: number, result?: T) {
   return new Promise((resolve) => setTimeout(() => resolve(result), ms));
 }
 
+const { FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN } = process.env;
+
 export default abstract class ApiService {
   protected manager = Flex.Manager.getInstance();
   readonly serverlessDomain: string;
@@ -17,8 +19,7 @@ export default abstract class ApiService {
     this.serverlessProtocol = 'https';
     this.serverlessDomain = '';
 
-    if (process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN)
-      this.serverlessDomain = process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
+    if (FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN) this.serverlessDomain = FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
   }
 
   protected buildBody(encodedParams: EncodedParams): string {
