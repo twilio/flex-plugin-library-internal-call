@@ -15,10 +15,8 @@ export default abstract class ApiService {
     // use serverless_functions_domain from .env or set as undefined
 
     this.serverlessProtocol = 'https';
-    this.serverlessDomain = '<FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN>';
 
-    if (process.env.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN)
-      this.serverlessDomain = process.env.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
+    this.serverlessDomain = process.env.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN || '<FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN>';
   }
 
   protected buildBody(encodedParams: EncodedParams): string {
