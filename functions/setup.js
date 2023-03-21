@@ -1,3 +1,4 @@
+const TokenValidator = require('twilio-flex-token-validator').functionValidator;
 const helpers = require('@twilio-labs/runtime-helpers');
 const { listEnvironments } = require('@twilio-labs/serverless-api/dist/api/environments');
 const { getOrCreateAssetResources, uploadAsset } = require('@twilio-labs/serverless-api/dist/api/assets');
@@ -55,7 +56,7 @@ async function getEnvironment(serverlessApiClient, serviceSid, pluginName) {
   }
 }
 
-exports.handler = async function (context, event, callback) {
+exports.handler = TokenValidator(async function (context, event, callback) {
   const pluginName = event.name;
   const version = event.version || '1.0.0';
   const pluginBaseUrl = getAssetBaseUrl(pluginName, version);
@@ -147,4 +148,4 @@ exports.handler = async function (context, event, callback) {
     }
     return callback(null, { status: 'failed' });
   }
-};
+});
