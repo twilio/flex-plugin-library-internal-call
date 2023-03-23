@@ -243,11 +243,11 @@ describe('taskrouter.updateTaskAttributes', () => {
 
   it('updateTaskAttributes gives success', async () => {
     const { updateTaskAttributes } = require('../../../functions/twilio-wrappers/taskrouter.private');
-    global.context = {};
     const payload = {
       attributesUpdate: '{"attr2": "mockValue"}',
       taskSid: 'TSxxxxxx',
       attempts: 0,
+      context: {}
     };
 
     const task = await updateTaskAttributes({ ...payload });
