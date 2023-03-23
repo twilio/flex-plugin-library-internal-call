@@ -122,7 +122,7 @@ exports.fetchTask = async function fetchTask(parameters) {
  * more explained here https://www.twilio.com/docs/taskrouter/api/task#task-version
  */
 exports.updateTaskAttributes = async function updateTaskAttributes(parameters) {
-  const { attempts, taskSid, attributesUpdate } = parameters;
+  const { context, attempts, taskSid, attributesUpdate } = parameters;
 
   if (!isNumber(attempts)) throw 'Invalid parameters object passed. Parameters must contain the number of attempts';
   if (!isString(taskSid)) throw 'Invalid parameters object passed. Parameters must contain the taskSid string';
