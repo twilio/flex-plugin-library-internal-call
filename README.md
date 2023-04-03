@@ -1,5 +1,3 @@
-NOTE: This repo is still a WIP (Work In Progress) and the codebase is not yet production ready.
-
 # Native Flex Dialpad Add-on for Agent to Agent (Internal) Call
 
 # Internal call
