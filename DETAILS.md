@@ -1,17 +1,17 @@
 ## Details
 
-#### Prerequisites
+### Prerequisites
 Flex Dialpad should be enabled in voice configuration for this plugin to work. Please refer to the screenshot below. Visit [Twilio Console](https://console.stage.twilio.com/us1/develop/flex/manage/voice) to set up voice.
 
 ![Dialpad configuration](https://raw.githubusercontent.com/twilio/flex-plugin-library-internal-call/main/screenshots/dialpad.png)
 
-#### How it works
+### How it works
 Plugin is ready to use once it is installed and the browser window is refreshed.
 - A search and select component is added to the Flex Dialpad on the right.
 - Another agent needs to be in "Available" status, in order to be selectable.
 - Once they are selected, the call is connected with that agent.
 
-#### Installation
+### Installation
 During installation, 2 fields are required:
 
 1. *TaskRouter Workspace SID*: This is the SID of the "Flex Task Assignment" workspace that you see in [Twilio Console > TaskRouter > Workspaces](https://console.stage.twilio.com/us1/develop/taskrouter/workspaces). Please refer screenshot below:
