@@ -1,6 +1,7 @@
 {
   "name": "flex-plugin-library-internal-call",
-  "version": "1.0.1",
+  "version": "1.0.0",
+  "id": "plibo-dialpad-addon-internal-call",
   "private": true,
   "scripts": {
     "start": "twilio flex:plugins:start",
