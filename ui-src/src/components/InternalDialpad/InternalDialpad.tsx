@@ -9,6 +9,7 @@ import { Text } from '@twilio-paste/core/text';
 import { makeInternalCall } from '../../helpers/internalCall';
 import { debounce } from 'lodash';
 import { Worker as InstantQueryWorker } from '../../types/InstantQuery';
+import Analytics, { Event } from '../../utils/Analytics';
 
 export interface OwnProps {
   manager: Manager;
@@ -76,6 +77,9 @@ const InternalDialpad = (props: OwnProps) => {
       const { manager } = props;
 
       makeInternalCall(manager, selectedWorker);
+      Analytics.track(Event.INTERNAL_CALL_STARTED, {
+        toWorkerSid: selectedWorker.worker_sid,
+      });
     }
   };
 
