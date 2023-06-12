@@ -10,7 +10,7 @@ describe('Analytics', () => {
     accountSid: '',
     flexUiVersion: '2.1.1',
     originalPluginName: 'plibo-dialpad-addon-internal-call',
-    plugin: 'flex-plugin-library-internal-call',
+    plugin: 'plibo-dialpad-addon-internal-call',
     pluginVersion: '1.0.0',
     product: 'Flex',
     workerSid: '',
