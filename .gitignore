@@ -148,8 +148,6 @@ test-results/
 
 appConfig.js
 
-package-lock.json
-
 # env files
 .env
 *.development
