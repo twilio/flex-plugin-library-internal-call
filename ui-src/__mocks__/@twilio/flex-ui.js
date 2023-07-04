@@ -2,7 +2,6 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { EventEmitter } from 'events';
 import { getMockedServiceConfiguration } from '../../test-utils/flex-service-configuration';
-// import { getMockedReduxState } from '../../test-utils/flex-redux';
 
 // We need to mock anything our plugin uses from @twilio/flex-ui here
 

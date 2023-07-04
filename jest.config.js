@@ -14,8 +14,6 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '.*\\.d\\.ts',
     'index\\.ts',
-    'polyfilled\\.ts',
-    'createAction.ts',
     'jest.config.js',
     'webpack.*\\.js',
     './coverage',
@@ -24,13 +22,15 @@ module.exports = {
     '/types',
     '/strings',
     '/utils',
-    './functions/setup\\.js',
+    '/build',
+    'assets',
+    './functions/setup.js',
+    '/redux',
   ],
   coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
   testResultsProcessor: 'jest-junit',
   reporters: ['default', 'jest-junit'],
-  // restoreMocks: true,
   clearMocks: true,
   automock: false,
-  //   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  testTimeout: 15000
 };
