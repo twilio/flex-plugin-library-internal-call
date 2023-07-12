@@ -3,8 +3,8 @@ import { makeInternalCall } from '../internalCall';
 import { Worker as InstantQueryWorker } from '../../types/InstantQuery';
 
 describe('internal call', () => {
-  let flex: typeof Flex = Flex;
-  let manager: Flex.Manager = flex.Manager.getInstance();
+  const flex: typeof Flex = Flex;
+  const manager: Flex.Manager = flex.Manager.getInstance();
   const mockWorker = {
     attributes: { full_name: 'mockFullName', contact_uri: 'mockContatctURI' },
     friendly_name: 'mockFriendlyName',

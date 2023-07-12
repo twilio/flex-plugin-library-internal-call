@@ -4,8 +4,8 @@ import errorNotification from '../InternalCall';
 import { StringTemplates } from '../../strings/InternalCall';
 
 describe('InternalCall notification', () => {
-  let flex: typeof Flex = Flex;
-  let manager: Flex.Manager = Flex.Manager.getInstance();
+  const flex: typeof Flex = Flex;
+  const manager: Flex.Manager = Flex.Manager.getInstance();
   (manager.store.getState as unknown as jest.Mock).mockReturnValue({
     flex: {
       worker: {
