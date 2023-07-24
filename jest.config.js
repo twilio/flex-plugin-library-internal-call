@@ -9,7 +9,6 @@ module.exports = {
   modulePathIgnorePatterns: ['<rootDir>/dist'],
   testPathIgnorePatterns: ['<rootDir>/dist/'],
   coverageDirectory: './coverage/',
-  collectCoverage: true,
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}'],
   coveragePathIgnorePatterns: [
     '.*\\.d\\.ts',
