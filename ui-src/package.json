@@ -1,6 +1,6 @@
 {
   "name": "plibo-dialpad-addon-internal-call",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "id": "plibo-dialpad-addon-internal-call",
   "private": true,
   "scripts": {
