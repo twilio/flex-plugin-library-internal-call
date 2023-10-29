@@ -35,7 +35,6 @@ exports.handler = prepareFlexFunction(requiredParameters, async (context, event,
     response.setBody({});
     callback(null, response);
   } catch (error) {
-    console.log(error);
     handleError(error);
   }
 });
