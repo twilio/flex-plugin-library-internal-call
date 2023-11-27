@@ -1,4 +1,4 @@
-import { TaskRouterUtils } from '@twilio/flex-plugins-library-utils';
+const { TaskRouterUtils } = require('@twilio/flex-plugins-library-utils');
 
 /**
  * @param {object} parameters the parameters for the function
