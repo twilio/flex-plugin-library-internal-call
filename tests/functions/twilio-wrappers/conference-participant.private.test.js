@@ -1,38 +1,33 @@
-import { setup } from '../../test-utils/test-helper.js';
-
-const mockTo = '+91xxxxxxxxxx';
-const mockFrom = '+91xxxxxxxxxx';
 const taskSid = 'TSxxxxxxxx';
 const mockCallSid = 'CSxxxxxxxx';
 const participantSid = 'PSxxxxxxxx';
 
+jest.mock('@twilio/flex-plugins-library-utils', () => ({
+  __esModule: true,
+  ConferenceUtils: jest.fn(),
+}));
+
+import { ConferenceUtils } from '@twilio/flex-plugins-library-utils';
+
 describe('holdParticipant tests from ConferenceParticipant', () => {
-  beforeAll(() => {
-    setup();
-    global.Runtime._addFunction(
-      'twilio-wrappers/retry-handler',
-      './functions/twilio-wrappers/retry-handler.private.js',
-    );
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  const holdUpdateParticipant = jest.fn(() =>
-    Promise.resolve({
-      callSid: mockCallSid,
-    }),
-  );
-
-  const getHolUpdateParticipantMockTwilioClient = function (holdParticipant) {
-    const mockConferenceService = {
-      participants: (_partSid) => ({
-        update: holdParticipant,
-      }),
-    };
-    return {
-      conferences: (_taskSid) => mockConferenceService,
-    };
-  };
-
   it('holdParticipant returns success response', async () => {
+    ConferenceUtils.mockImplementation((value) => {
+      return {
+        holdParticipant: jest.fn(() =>
+          Promise.resolve({
+            status: 200,
+            participantsResponse: {
+              callSid: mockCallSid,
+            },
+            success: true,
+          }),
+        ),
+      };
+    });
     const { holdParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
     const parameters = {
       conference: taskSid,
@@ -41,7 +36,7 @@ describe('holdParticipant tests from ConferenceParticipant', () => {
     };
 
     const context = {
-      getTwilioClient: () => getHolUpdateParticipantMockTwilioClient(holdUpdateParticipant),
+      getTwilioClient: () => () => jest.fn(),
     };
 
     const participant = await holdParticipant({ context, ...parameters });
@@ -51,121 +46,58 @@ describe('holdParticipant tests from ConferenceParticipant', () => {
       callSid: mockCallSid,
       status: 200,
     });
-    expect(holdUpdateParticipant.mock.calls.length).toBe(1);
-    expect(holdUpdateParticipant.mock.calls[0][0]).toStrictEqual({
-      hold: true,
+  });
+
+  it('holdParticipant returns error response', async () => {
+    ConferenceUtils.mockImplementation((value) => {
+      return {
+        holdParticipant: jest.fn(() =>
+          Promise.reject({
+            success: false,
+            status: 400,
+            message: 'Mock Error Message',
+          }),
+        ),
+      };
     });
-  });
-
-  it('holdParticipant throws invalid parameters object passed', async () => {
     const { holdParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
     const parameters = {
       conference: taskSid,
       participant: participantSid,
       hold: true,
     };
-
-    let err = null;
-    try {
-      await holdParticipant({ ...parameters });
-    } catch (error) {
-      err = error;
-    }
-
-    expect(err).toBe('Invalid parameters object passed. Parameters must contain reason context object');
-  });
-
-  it('holdParticipant throws invalid parameters object passed', async () => {
-    const { holdParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
-    const parameters = {
-      conference: 1,
-      participant: participantSid,
-      hold: true,
-    };
     const context = {
-      getTwilioClient: () => getHolUpdateParticipantMockTwilioClient(holdUpdateParticipant),
+      getTwilioClient: () => () => jest.fn(),
     };
+    const errParticipant = await holdParticipant({ context, ...parameters });
 
-    let err = null;
-    try {
-      await holdParticipant({ context, ...parameters });
-    } catch (error) {
-      err = error;
-    }
-
-    expect(err).toBe('Invalid parameters object passed. Parameters must contain conference string');
-  });
-
-  it('holdParticipant throws invalid parameters object passed', async () => {
-    const { holdParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
-    const parameters = {
-      conference: taskSid,
-      participant: 1,
-      hold: true,
-    };
-    const context = {
-      getTwilioClient: () => getHolUpdateParticipantMockTwilioClient(holdUpdateParticipant),
-    };
-
-    let err = null;
-    try {
-      await holdParticipant({ context, ...parameters });
-    } catch (error) {
-      err = error;
-    }
-
-    expect(err).toBe('Invalid parameters object passed. Parameters must contain participant string');
-  });
-
-  it('holdParticipant throws invalid parameters object passed', async () => {
-    const { holdParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
-    const parameters = {
-      conference: taskSid,
-      participant: participantSid,
-      hold: 1,
-    };
-    const context = {
-      getTwilioClient: () => getHolUpdateParticipantMockTwilioClient(holdUpdateParticipant),
-    };
-
-    let err = null;
-    try {
-      await holdParticipant({ context, ...parameters });
-    } catch (error) {
-      err = error;
-    }
-
-    expect(err).toBe('Invalid parameters object passed. Parameters must contain hold boolean');
+    expect(errParticipant).toEqual({
+      success: false,
+      status: 400,
+      message: 'Mock Error Message',
+    });
   });
 });
 
 describe('updateParticipant tests from ConferenceParticipant', () => {
-  beforeAll(() => {
-    setup();
-    global.Runtime._addFunction(
-      'twilio-wrappers/retry-handler',
-      './functions/twilio-wrappers/retry-handler.private.js',
-    );
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  const holdUpdateParticipant = jest.fn(() =>
-    Promise.resolve({
-      callSid: mockCallSid,
-    }),
-  );
-
-  const getHolUpdateParticipantMockTwilioClient = function (holdParticipant) {
-    const mockConferenceService = {
-      participants: (_partSid) => ({
-        update: holdParticipant,
-      }),
-    };
-    return {
-      conferences: (_taskSid) => mockConferenceService,
-    };
-  };
-
   it('updateParticipant returns success response', async () => {
+    ConferenceUtils.mockImplementation((value) => {
+      return {
+        updateParticipant: jest.fn(() =>
+          Promise.resolve({
+            status: 200,
+            participantsResponse: {
+              callSid: mockCallSid,
+            },
+            success: true,
+          }),
+        ),
+      };
+    });
     const { updateParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
     const parameters = {
       conference: taskSid,
@@ -173,7 +105,7 @@ describe('updateParticipant tests from ConferenceParticipant', () => {
       endConferenceOnExit: true,
     };
     const context = {
-      getTwilioClient: () => getHolUpdateParticipantMockTwilioClient(holdUpdateParticipant),
+      getTwilioClient: () => () => jest.fn(),
     };
 
     const participant = await updateParticipant({ context, ...parameters });
@@ -183,13 +115,20 @@ describe('updateParticipant tests from ConferenceParticipant', () => {
       callSid: mockCallSid,
       status: 200,
     });
-    expect(holdUpdateParticipant.mock.calls.length).toBe(1);
-    expect(holdUpdateParticipant.mock.calls[0][0]).toStrictEqual({
-      endConferenceOnExit: true,
+  });
+
+  it('updateParticipant return error response', async () => {
+    ConferenceUtils.mockImplementation((value) => {
+      return {
+        updateParticipant: jest.fn(() =>
+          Promise.reject({
+            success: false,
+            status: 400,
+            message: 'Mock Error Message',
+          }),
+        ),
+      };
     });
-  });
-
-  it('updateParticipant throws invalid parameters object passed', async () => {
     const { updateParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
     const parameters = {
       conference: taskSid,
@@ -197,100 +136,36 @@ describe('updateParticipant tests from ConferenceParticipant', () => {
       endConferenceOnExit: true,
     };
 
-    let err = null;
-    try {
-      await updateParticipant({ ...parameters });
-    } catch (error) {
-      err = error;
-    }
-
-    expect(err).toBe('Invalid parameters object passed. Parameters must contain reason context object');
-  });
-
-  it('updateParticipant throws invalid parameters object passed', async () => {
-    const { updateParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
-    const parameters = {
-      conference: 1,
-      participant: participantSid,
-      endConferenceOnExit: true,
-    };
     const context = {
-      getTwilioClient: () => getHolUpdateParticipantMockTwilioClient(holdUpdateParticipant),
+      getTwilioClient: () => () => jest.fn(),
     };
+    const errParticipant = await updateParticipant({ context, ...parameters });
 
-    let err = null;
-    try {
-      await updateParticipant({ context, ...parameters });
-    } catch (error) {
-      err = error;
-    }
-
-    expect(err).toBe('Invalid parameters object passed. Parameters must contain conference string');
-  });
-
-  it('updateParticipant throws invalid parameters object passed', async () => {
-    const { updateParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
-    const parameters = {
-      conference: taskSid,
-      participant: 1,
-      endConferenceOnExit: true,
-    };
-    const context = {
-      getTwilioClient: () => getHolUpdateParticipantMockTwilioClient(holdUpdateParticipant),
-    };
-
-    let err = null;
-    try {
-      await updateParticipant({ context, ...parameters });
-    } catch (error) {
-      err = error;
-    }
-
-    expect(err).toBe('Invalid parameters object passed. Parameters must contain participant string');
-  });
-
-  it('updateParticipant throws invalid parameters object passed', async () => {
-    const { updateParticipant } = require('../../../functions/twilio-wrappers/conference-participant.private');
-    const parameters = {
-      conference: taskSid,
-      participant: participantSid,
-      endConferenceOnExit: 1,
-    };
-    const context = {
-      getTwilioClient: () => getHolUpdateParticipantMockTwilioClient(holdUpdateParticipant),
-    };
-
-    let err = null;
-    try {
-      await updateParticipant({ context, ...parameters });
-    } catch (error) {
-      err = error;
-    }
-
-    expect(err).toBe('Invalid parameters object passed. Parameters must contain endConferenceOnExit boolean');
+    expect(errParticipant).toEqual({
+      success: false,
+      status: 400,
+      message: 'Mock Error Message',
+    });
   });
 });
 
 describe('fetchByTask tests from ConferenceParticipant', () => {
-  beforeAll(() => {
-    setup();
-    global.Runtime._addFunction(
-      'twilio-wrappers/retry-handler',
-      './functions/twilio-wrappers/retry-handler.private.js',
-    );
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  const fetchByTaskMock = jest.fn(() => Promise.resolve({}));
-
-  const getFetchByTaskMockTwilioClient = function (fetchTaskMock) {
-    return {
-      conferences: {
-        list: fetchTaskMock,
-      },
-    };
-  };
-
   it('fetchByTask is called successfully', async () => {
+    ConferenceUtils.mockImplementation((value) => {
+      return {
+        fetchConferencesByTask: jest.fn(() =>
+          Promise.resolve({
+            status: 200,
+            conference: {},
+            success: true,
+          }),
+        ),
+      };
+    });
     const { fetchByTask } = require('../../../functions/twilio-wrappers/conference-participant.private');
     const parameters = {
       taskSid,
@@ -298,21 +173,46 @@ describe('fetchByTask tests from ConferenceParticipant', () => {
       limit: 1,
     };
     const context = {
-      getTwilioClient: () => getFetchByTaskMockTwilioClient(fetchByTaskMock),
+      getTwilioClient: () => () => jest.fn(),
     };
 
     const task = await fetchByTask({ context, ...parameters });
 
     expect(task).toEqual({
       success: true,
-      conferences: {},
+      conference: {},
       status: 200,
     });
-    expect(fetchByTaskMock.mock.calls.length).toBe(1);
-    expect(fetchByTaskMock.mock.calls[0][0]).toStrictEqual({
-      friendlyName: 'TSxxxxxxxx',
-      limit: 1,
+  });
+
+  it('fetchByTask return error response', async () => {
+    ConferenceUtils.mockImplementation((value) => {
+      return {
+        fetchConferencesByTask: jest.fn(() =>
+          Promise.reject({
+            success: false,
+            status: 400,
+            message: 'Mock Error Message',
+          }),
+        ),
+      };
+    });
+    const { fetchByTask } = require('../../../functions/twilio-wrappers/conference-participant.private');
+    const parameters = {
+      taskSid,
       status: '',
+      limit: 1,
+    };
+    const context = {
+      getTwilioClient: () => () => jest.fn(),
+    };
+
+    const errTask = await fetchByTask({ context, ...parameters });
+
+    expect(errTask).toEqual({
+      success: false,
+      status: 400,
+      message: 'Mock Error Message',
     });
   });
 });

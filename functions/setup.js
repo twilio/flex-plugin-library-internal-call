@@ -95,6 +95,7 @@ exports.handler = async function (context, event, callback) {
         dependencies: buildDependencies,
         functionVersions: buildFunctions.map((x) => x.sid),
         assetVersions: buildAssets,
+        runtime: 'latest',
       };
 
       const { sid: newBuildSid } = await triggerBuild(payload, serviceSid, serverlessClient);

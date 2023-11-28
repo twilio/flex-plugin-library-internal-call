@@ -9,7 +9,7 @@ import { Text } from '@twilio-paste/core/text';
 import { makeInternalCall } from '../../helpers/internalCall';
 import { debounce } from 'lodash';
 import { Worker as InstantQueryWorker } from '../../types/InstantQuery';
-import Analytics, { Event } from '../../utils/Analytics';
+import { Analytics, Event } from '../../utils/Analytics';
 
 export interface OwnProps {
   manager: Manager;
