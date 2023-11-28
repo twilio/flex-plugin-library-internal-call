@@ -14,7 +14,7 @@ const { TaskRouterUtils } = require('@twilio/flex-plugins-library-utils');
  */
 exports.createTask = async function createTask(parameters) {
   const { context, workflowSid, taskChannel, attributes, priority, timeout, attempts } = parameters;
-
+  const region = context.TWILIO_REGION ? context.TWILIO_REGION.split('-')[0] : '';
   const config = {
     attempts: attempts || 3,
     workflowSid,
@@ -22,6 +22,10 @@ exports.createTask = async function createTask(parameters) {
     attributes,
     priority,
     timeout,
+    workspaceSid: context.TWILIO_FLEX_WORKSPACE_SID,
+    accountSid: context.ACCOUNT_SID,
+    authToken: context.AUTH_TOKEN,
+    region,
   };
 
   const client = context.getTwilioClient();
@@ -54,10 +58,14 @@ exports.createTask = async function createTask(parameters) {
  */
 exports.fetchTask = async function fetchTask(parameters) {
   const { attempts, taskSid, context } = parameters;
-
+  const region = context.TWILIO_REGION ? context.TWILIO_REGION.split('-')[0] : '';
   const config = {
     attempts: attempts || 3,
     taskSid,
+    workspaceSid: context.TWILIO_FLEX_WORKSPACE_SID,
+    accountSid: context.ACCOUNT_SID,
+    authToken: context.AUTH_TOKEN,
+    region,
   };
 
   const client = context.getTwilioClient();
@@ -108,11 +116,15 @@ exports.fetchTask = async function fetchTask(parameters) {
  */
 exports.updateTaskAttributes = async function updateTaskAttributes(parameters) {
   const { context, attempts, taskSid, attributesUpdate } = parameters;
-  // const region = context.TWILIO_REGION ? context.TWILIO_REGION.split('-')[0] : '';
+  const region = context.TWILIO_REGION ? context.TWILIO_REGION.split('-')[0] : '';
   const config = {
     attempts: attempts || 3,
     taskSid,
     attributesUpdate,
+    workspaceSid: context.TWILIO_FLEX_WORKSPACE_SID,
+    accountSid: context.ACCOUNT_SID,
+    authToken: context.AUTH_TOKEN,
+    region,
   };
 
   const client = context.getTwilioClient();
@@ -145,11 +157,15 @@ exports.updateTaskAttributes = async function updateTaskAttributes(parameters) {
  */
 exports.updateTask = async function updateTask(parameters) {
   const { attempts, taskSid, updateParams, context } = parameters;
-
+  const region = context.TWILIO_REGION ? context.TWILIO_REGION.split('-')[0] : '';
   const config = {
     attempts: attempts || 3,
     taskSid,
     updateParams,
+    workspaceSid: context.TWILIO_FLEX_WORKSPACE_SID,
+    accountSid: context.ACCOUNT_SID,
+    authToken: context.AUTH_TOKEN,
+    region,
   };
 
   const client = context.getTwilioClient();
