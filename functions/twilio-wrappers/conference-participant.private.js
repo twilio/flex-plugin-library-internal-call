@@ -89,3 +89,32 @@ exports.fetchByTask = async (parameters) => {
     return { success: false, status: error.status, message: error.message };
   }
 };
+
+/**
+ * @param {object} parameters the parameters for the function
+ * @param {number} parameters.attempts the number of retry attempts performed
+ * @param {object} parameters.context the context from calling lambda function
+ * @param {string} parameters.taskSid the task SID to fetch conferences for
+ * @param {string} parameters.status the status of conference(s) to fetch
+ * @param {number} parameters.limit the maximum number of conferences to retrieve
+ * @returns {Conference[]} The fetched conference(s)
+ * @description fetches conferences matching the given task SID and status
+ */
+exports.updateConference = async (parameters) => {
+  const { context, conference, updateParams } = parameters;
+
+  const config = {
+    attempts: 3,
+    conferenceSid: conference,
+    updateParams,
+  };
+
+  const client = context.getTwilioClient();
+  const conferenceClient = new ConferenceUtils(client, config);
+  try {
+    const conferences = await conferenceClient.updateConference(config);
+    return { ...conferences };
+  } catch (error) {
+    return { success: false, status: error.status, message: error.message };
+  }
+};
